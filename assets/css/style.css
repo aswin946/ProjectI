@@ -1,0 +1,125 @@
+/* assets/css/style.css  - main stylesheet (polished further in Phase 10) */
+
+:root {
+    --primary: #0f766e;
+    --primary-dark: #134e4a;
+    --bg: #f4f7f6;
+    --card: #ffffff;
+    --text: #1e2a2a;
+    --muted: #6b7780;
+    --border: #dde5e3;
+    --danger: #b4543a;
+    --success: #2f7d4f;
+    --income: #2f7d4f;
+    --expense: #b4543a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+h1 { color: var(--primary-dark); margin: 0 0 16px; }
+h2 { color: var(--primary-dark); margin: 0 0 12px; font-size: 20px; }
+a  { color: var(--primary); }
+.muted { color: var(--muted); font-size: 14px; }
+
+/* ---------- Layout ---------- */
+.container { max-width: 1000px; margin: 24px auto; padding: 0 16px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.site-footer { text-align: center; color: var(--muted); font-size: 13px; padding: 24px 0; }
+
+/* ---------- Navbar ---------- */
+.navbar {
+    background: var(--primary-dark);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+}
+.navbar .brand { color: #fff; font-size: 20px; font-weight: bold; text-decoration: none; }
+.nav-links { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; flex: 1; flex-wrap: wrap; }
+.nav-links a { color: #d7ebe8; text-decoration: none; padding: 8px 12px; border-radius: 4px; display: block; }
+.nav-links a:hover, .nav-links a.active { background: var(--primary); color: #fff; }
+.nav-user { display: flex; align-items: center; gap: 12px; font-size: 14px; }
+.nav-user form { margin: 0; }
+
+/* ---------- Cards ---------- */
+.card {
+    background: var(--card);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- Forms ---------- */
+.form-group { margin-bottom: 14px; }
+label { display: block; font-weight: bold; margin-bottom: 4px; font-size: 14px; }
+input[type="text"], input[type="email"], input[type="password"],
+input[type="number"], input[type="date"], select, textarea {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 15px;
+    background: #fff;
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--primary); border-color: var(--primary); }
+input:disabled { background: #eef2f1; color: var(--muted); }
+
+/* ---------- Buttons ---------- */
+.btn {
+    display: inline-block;
+    padding: 9px 18px;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-light { background: #e3efed; color: var(--primary-dark); }
+.btn-small { padding: 5px 12px; font-size: 13px; }
+.btn-block { width: 100%; }
+
+/* ---------- Messages ---------- */
+.alert { padding: 10px 14px; border-radius: 4px; margin-bottom: 14px; font-size: 14px; }
+.alert-success { background: #e4f3ea; color: #1f5c38; border: 1px solid #b8dcc6; }
+.alert-error   { background: #fbeae5; color: #8a3a25; border: 1px solid #efc6ba; }
+
+/* ---------- Tables ---------- */
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); }
+th { background: #eef4f3; }
+
+/* ---------- Login / Register ---------- */
+.auth-page .container { max-width: 440px; margin-top: 60px; }
+.auth-box {
+    background: var(--card);
+    padding: 28px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+.auth-link { text-align: center; margin: 16px 0 0; font-size: 14px; }
+
+/* ---------- Simple pages (Phase 1 test page) ---------- */
+.simple-page { max-width: 720px; margin: 40px auto; padding: 24px; background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+.ok   { color: var(--primary); font-weight: bold; }
+.fail { color: var(--danger); font-weight: bold; }
+.note { color: var(--muted); font-size: 14px; }
+
+/* ---------- Small screens ---------- */
+@media (max-width: 700px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .navbar { gap: 10px; }
+}
