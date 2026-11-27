@@ -15,7 +15,8 @@ $bodyClass = $bodyClass ?? '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo e($pageTitle); ?> | PEMS</title>
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/style.css">
+    <?php /* ?v=... changes whenever the file changes, so the browser never shows an old cached copy */ ?>
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/style.css?v=<?php echo filemtime(__DIR__ . '/../assets/css/style.css'); ?>">
 </head>
 <body class="<?php echo e($bodyClass); ?>">
 <?php if (is_logged_in()) { require __DIR__ . '/navbar.php'; } ?>

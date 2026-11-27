@@ -14,6 +14,8 @@ function nav_active(string $path): string
     <a class="brand" href="<?php echo BASE_URL; ?>/dashboard/index.php">PEMS</a>
     <ul class="nav-links">
         <li><a class="<?php echo nav_active('/dashboard/'); ?>" href="<?php echo BASE_URL; ?>/dashboard/index.php">Dashboard</a></li>
+        <li><a class="<?php echo nav_active('/transactions/'); ?>" href="<?php echo BASE_URL; ?>/transactions/index.php">Transactions</a></li>
+        <li><a class="<?php echo nav_active('/categories/'); ?>" href="<?php echo BASE_URL; ?>/categories/index.php">Categories</a></li>
         <li><a class="<?php echo nav_active('/auth/profile.php'); ?>" href="<?php echo BASE_URL; ?>/auth/profile.php">My Profile</a></li>
     </ul>
     <div class="nav-user">
