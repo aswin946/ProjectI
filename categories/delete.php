@@ -17,7 +17,7 @@ if (!verify_csrf()) {
 }
 
 $userId     = current_user_id();
-$categoryId = read_id($_POST['category_id'] ?? 0);
+$categoryId = read_id(post_text('category_id'));
 
 // The category must exist AND belong to the logged-in user
 $category = $categoryId ? get_user_category($pdo, $categoryId, $userId) : false;

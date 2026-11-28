@@ -5,8 +5,9 @@
  * Change these values if your XAMPP setup is different.
  */
 
-// Show detailed errors while developing. Set to false when you demonstrate/submit.
-define('APP_DEBUG', true);
+// true  = show detailed errors on the page (use while developing or fixing a problem)
+// false = show only friendly messages; real errors go to the Apache error log (use for the demo)
+define('APP_DEBUG', false);
 
 // Name of the project folder inside C:\xampp\htdocs\
 define('BASE_URL', '/PEMS');

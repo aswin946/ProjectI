@@ -33,10 +33,3 @@ function get_user_category(PDO $pdo, int $categoryId, int $userId)
     $stmt->execute([$categoryId, $userId]);
     return $stmt->fetch();
 }
-
-// Reads an ID from $_GET or $_POST. Returns a positive integer, or 0 if it is not valid.
-function read_id($value): int
-{
-    $id = filter_var($value, FILTER_VALIDATE_INT);
-    return ($id !== false && $id > 0) ? $id : 0;
-}

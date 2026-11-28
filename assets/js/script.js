@@ -43,3 +43,11 @@ window.addEventListener('load', function () {
     typeSelect.addEventListener('change', filterCategories);
     filterCategories();
 })();
+
+// Mobile menu: the button toggles the navigation links on small screens
+(function () {
+    var button = document.getElementById('navToggle');
+    var navbar = document.getElementById('navbar');
+    if (!button || !navbar) { return; }
+    button.addEventListener('click', function () { navbar.classList.toggle('open'); });
+})();

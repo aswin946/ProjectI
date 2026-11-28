@@ -7,7 +7,7 @@ require_once __DIR__ . '/../includes/auth_check.php';
 require_once __DIR__ . '/../includes/category_functions.php';
 
 $userId     = current_user_id();
-$categoryId = read_id($_GET['id'] ?? 0);
+$categoryId = read_id(get_text('id'));
 
 // Never trust the ID in the URL: load the category ONLY if it belongs to this user
 $category = $categoryId ? get_user_category($pdo, $categoryId, $userId) : false;
@@ -27,11 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verify_csrf()) {
         $errors[] = 'Invalid request. Please try again.';
     } else {
-        $name   = trim($_POST['category_name'] ?? '');
-        $status = $_POST['status'] ?? '';
+        $name   = post_text('category_name');
+        $status = post_text('status');
 
         // The type of a category that is already used cannot be changed
-        $type = $inUse ? $category['category_type'] : ($_POST['category_type'] ?? '');
+        $type = $inUse ? $category['category_type'] : post_text('category_type');
 
         $errors = validate_category_input($name, $type);
         if (!in_array($status, ['active', 'inactive'], true)) {

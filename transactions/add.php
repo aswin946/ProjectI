@@ -11,7 +11,7 @@ $errors = [];
 
 // Starting values. ?type=income / ?type=expense chooses the type shown first.
 $values = [
-    'type'             => (($_GET['type'] ?? '') === 'income') ? 'income' : 'expense',
+    'type'             => (get_text('type') === 'income') ? 'income' : 'expense',
     'category_id'      => 0,
     'amount'           => '',
     'description'      => '',

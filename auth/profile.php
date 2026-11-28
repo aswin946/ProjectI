@@ -13,11 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verify_csrf()) {
         $errors[] = 'Invalid request. Please try again.';
     } else {
-        $action = $_POST['action'] ?? '';
+        $action = post_text('action');
 
         // ----- Form 1: update name -----
         if ($action === 'update_name') {
-            $fullName = trim($_POST['full_name'] ?? '');
+            $fullName = post_text('full_name');
             if (mb_strlen($fullName) < 2 || mb_strlen($fullName) > 100) {
                 $errors[] = 'Full name must be between 2 and 100 characters.';
             } else {
@@ -31,9 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // ----- Form 2: change password -----
         if ($action === 'change_password') {
-            $current = $_POST['current_password'] ?? '';
-            $new     = $_POST['new_password'] ?? '';
-            $confirm = $_POST['confirm_password'] ?? '';
+            $current = post_raw('current_password');
+            $new     = post_raw('new_password');
+            $confirm = post_raw('confirm_password');
 
             $stmt = $pdo->prepare('SELECT password_hash FROM users WHERE user_id = ?');
             $stmt->execute([$userId]);

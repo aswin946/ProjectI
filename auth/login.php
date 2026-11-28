@@ -17,8 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verify_csrf()) {
         $error = 'Invalid request. Please try again.';
     } else {
-        $email    = strtolower(trim($_POST['email'] ?? ''));
-        $password = $_POST['password'] ?? '';
+        $email    = strtolower(post_text('email'));
+        $password = post_raw('password');
 
         try {
             $stmt = $pdo->prepare(

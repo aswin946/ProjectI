@@ -18,10 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verify_csrf()) {
         $errors[] = 'Invalid request. Please try again.';
     } else {
-        $fullName = trim($_POST['full_name'] ?? '');
-        $email    = strtolower(trim($_POST['email'] ?? ''));
-        $password = $_POST['password'] ?? '';
-        $confirm  = $_POST['confirm_password'] ?? '';
+        $fullName = post_text('full_name');
+        $email    = strtolower(post_text('email'));
+        $password = post_raw('password');
+        $confirm  = post_raw('confirm_password');
 
         // ----- Server-side validation -----
         if (mb_strlen($fullName) < 2 || mb_strlen($fullName) > 100) {

@@ -18,6 +18,43 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// ---------- Basic security headers ----------
+header('X-Content-Type-Options: nosniff');   // browser must not guess file types
+header('X-Frame-Options: SAMEORIGIN');       // other websites cannot put our pages in a frame
+header('Referrer-Policy: same-origin');
+
+// ---------- Reading form / URL values safely ----------
+// A value sent by a user can be text OR an array (for example ?id[]=1).
+// These helpers always return plain text, so the rest of the code never gets a surprise.
+function post_text(string $key): string   // trimmed text from a form
+{
+    return (isset($_POST[$key]) && is_string($_POST[$key])) ? trim($_POST[$key]) : '';
+}
+function post_raw(string $key): string    // untrimmed text (used for passwords)
+{
+    return (isset($_POST[$key]) && is_string($_POST[$key])) ? $_POST[$key] : '';
+}
+function get_text(string $key): string    // trimmed text from the URL (?key=value)
+{
+    return (isset($_GET[$key]) && is_string($_GET[$key])) ? trim($_GET[$key]) : '';
+}
+
+// Turns a value from the URL or a form into a positive whole number.
+// Returns 0 when it is not a valid ID (so "abc", "-5", "1.5" and "" all become 0).
+function read_id($value): int
+{
+    $id = filter_var($value, FILTER_VALIDATE_INT);
+    return ($id !== false && $id > 0) ? $id : 0;
+}
+
+// ---------- Month names ----------
+function month_name(int $month): string
+{
+    $names = [1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April', 5 => 'May', 6 => 'June',
+              7 => 'July', 8 => 'August', 9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'];
+    return $names[$month] ?? '';
+}
+
 // ---------- Output safety ----------
 // e() = "escape". Use it every time you print text that a user typed.
 function e($value): string

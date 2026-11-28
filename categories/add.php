@@ -14,8 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verify_csrf()) {
         $errors[] = 'Invalid request. Please try again.';
     } else {
-        $name = trim($_POST['category_name'] ?? '');
-        $type = $_POST['category_type'] ?? '';
+        $name = post_text('category_name');
+        $type = post_text('category_type');
         $errors = validate_category_input($name, $type);
 
         if (!$errors) {

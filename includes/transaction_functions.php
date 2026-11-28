@@ -101,3 +101,76 @@ function validate_transaction_input(PDO $pdo, int $userId, array $post, int $exi
     ];
     return [$errors, $clean];
 }
+
+// =====================================================================
+// Search and filter (Phase 6)
+// =====================================================================
+
+// Reads the filter values from the URL (?type=...&category_id=...&date_from=...&date_to=...&q=...)
+// Returns [$filters, $errors]. Invalid values are ignored and reported.
+function read_transaction_filters(): array
+{
+    $errors  = [];
+    $filters = ['type' => '', 'category_id' => 0, 'date_from' => '', 'date_to' => '', 'q' => ''];
+
+    $type = get_text('type');
+    if (in_array($type, ['income', 'expense'], true)) {
+        $filters['type'] = $type;
+    }
+
+    $filters['category_id'] = read_id(get_text('category_id'));
+    $filters['q'] = mb_substr(get_text('q'), 0, 100);
+
+    // A date is accepted only if it is a real date written as YYYY-MM-DD
+    foreach (['date_from' => 'From date', 'date_to' => 'To date'] as $key => $label) {
+        $value = get_text($key);
+        if ($value === '') {
+            continue;
+        }
+        $d = DateTime::createFromFormat('Y-m-d', $value);
+        if ($d && $d->format('Y-m-d') === $value) {
+            $filters[$key] = $value;
+        } else {
+            $errors[] = $label . ' is not a valid date and was ignored.';
+        }
+    }
+
+    if ($filters['date_from'] !== '' && $filters['date_to'] !== '' && $filters['date_from'] > $filters['date_to']) {
+        $errors[] = 'The From date is after the To date, so the date filter was ignored.';
+        $filters['date_from'] = '';
+        $filters['date_to']   = '';
+    }
+    return [$filters, $errors];
+}
+
+// Builds the WHERE part of the SQL from the filters.
+// Returns [$whereSql, $params]. The user_id condition is ALWAYS first.
+// Values are never put inside the SQL text, only into $params (prepared statement).
+function build_transaction_where(array $filters, int $userId): array
+{
+    $where  = ['t.user_id = ?'];
+    $params = [$userId];
+
+    if ($filters['type'] !== '') {
+        $where[]  = 't.type = ?';
+        $params[] = $filters['type'];
+    }
+    if ($filters['category_id'] > 0) {
+        $where[]  = 't.category_id = ?';
+        $params[] = $filters['category_id'];
+    }
+    if ($filters['date_from'] !== '') {
+        $where[]  = 't.transaction_date >= ?';
+        $params[] = $filters['date_from'];
+    }
+    if ($filters['date_to'] !== '') {
+        $where[]  = 't.transaction_date <= ?';
+        $params[] = $filters['date_to'];
+    }
+    if ($filters['q'] !== '') {
+        // % and _ typed by the user are escaped so they are searched as normal characters
+        $where[]  = 't.description LIKE ?';
+        $params[] = '%' . addcslashes($filters['q'], '%_\\') . '%';
+    }
+    return [implode(' AND ', $where), $params];
+}

@@ -96,7 +96,7 @@ require __DIR__ . '/../includes/header.php';
 <div class="card">
     <h2>This month (<?php echo e(date('F Y')); ?>)</h2>
     <div class="month-summary">
-        <div><span class="muted">Income</span><br><strong class="amount-income"><?php echo e(format_money($month['month_expense'])); ?></strong></div>
+        <div><span class="muted">Income</span><br><strong class="amount-income"><?php echo e(format_money($month['month_income'])); ?></strong></div>
         <div><span class="muted">Expenses</span><br><strong class="amount-expense"><?php echo e(format_money($month['month_expense'])); ?></strong></div>
         <div><span class="muted">Net for the month</span><br><strong class="<?php echo $monthNet < 0 ? 'amount-expense' : 'amount-income'; ?>"><?php echo e(format_money($monthNet)); ?></strong></div>
     </div>

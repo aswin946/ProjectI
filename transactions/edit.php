@@ -7,7 +7,7 @@ require_once __DIR__ . '/../includes/auth_check.php';
 require_once __DIR__ . '/../includes/transaction_functions.php';
 
 $userId        = current_user_id();
-$transactionId = read_id($_GET['id'] ?? 0);
+$transactionId = read_id(get_text('id'));
 
 // Never trust the ID in the URL: load the transaction ONLY if it belongs to this user
 $transaction = $transactionId ? get_user_transaction($pdo, $transactionId, $userId) : false;

@@ -17,7 +17,7 @@ if (!verify_csrf()) {
 }
 
 $userId        = current_user_id();
-$transactionId = read_id($_POST['transaction_id'] ?? 0);
+$transactionId = read_id(post_text('transaction_id'));
 
 // The transaction must exist AND belong to the logged-in user
 $transaction = $transactionId ? get_user_transaction($pdo, $transactionId, $userId) : false;
